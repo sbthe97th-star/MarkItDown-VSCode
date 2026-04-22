@@ -1,0 +1,64 @@
+{
+  "name": "markitdown",
+  "displayName": "MarkItDown",
+  "description": "Extended markdown editing features: admonitions, code copy buttons, and table formatting",
+  "version": "0.0.1",
+  "publisher": "markitdown",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other",
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onLanguage:markdown"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "markitdown.formatTable",
+        "title": "MarkItDown: Format Table"
+      },
+      {
+        "command": "markitdown.highlight",
+        "title": "MarkItDown: Format Highlight"
+      },
+      {
+        "command": "markitdown.copyCode",
+        "title": "MarkItDown: Copy Code Block"
+      }
+    ],
+    "grammars": [
+      {
+        "path": "./syntaxes/markitdown-injection.json",
+        "scopeName": "markdown.markitdown.injection",
+        "injectTo": [
+          "text.html.markdown"
+        ]
+      }
+    ],
+    "configuration": {
+      "title": "MarkItDown",
+      "properties": {
+        "markitdown.enableAutoRow": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable automatic table row generation when pressing Enter in a table"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.90.0",
+    "typescript": "^5.4.0"
+  }
+}

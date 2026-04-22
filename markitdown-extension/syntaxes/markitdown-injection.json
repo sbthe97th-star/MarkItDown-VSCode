@@ -1,0 +1,48 @@
+{
+  "scopeName": "markdown.markitdown.injection",
+  "injectTo": [
+    "text.html.markdown"
+  ],
+  "patterns": [
+    {
+      "name": "meta.admonition.markdown",
+      "begin": "^(\\s*)(!!!|\\?\\?\\?\\+?)\\s+(note|info|todo|tip|hint|success|check|done|question|help|faq|warning|attention|caution|failure|fail|missing|danger|error|bug|example|snippet|quote|cite)\\s+([\"'][^\"']*[\"'])?\\s*$",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.whitespace.comment.leading.markdown"
+        },
+        "2": {
+          "name": "keyword.control.admonition.markdown"
+        },
+        "3": {
+          "name": "entity.name.type.admonition.markdown"
+        },
+        "4": {
+          "name": "string.quoted.double.admonition.title.markdown"
+        }
+      },
+      "contentName": "meta.admonition.content.markdown",
+      "patterns": [
+        {
+          "include": "text.html.markdown"
+        }
+      ],
+      "end": "^(?!\\1\\s+\\S)"
+    },
+    {
+      "name": "markup.inserted.highlight.markdown",
+      "match": "(==)([^=]+)(==)",
+      "captures": {
+        "1": {
+          "name": "punctuation.definition.highlight.begin.markdown"
+        },
+        "2": {
+          "name": "meta.highlight.content.markdown"
+        },
+        "3": {
+          "name": "punctuation.definition.highlight.end.markdown"
+        }
+      }
+    }
+  ]
+}

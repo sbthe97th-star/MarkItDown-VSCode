@@ -1,0 +1,102 @@
+{
+  "name": "markitdown",
+  "displayName": "MarkItDown Extension",
+  "description": "Advanced Markdown formatting (bold, italic, underline, strikethrough, highlight, quote, link, inline code, code block) plus Admonition highlighting, folding, and IntelliSense snippets. Designed to complement Markdown All in One.",
+  "version": "2.2.2",
+  "publisher": "dein-publisher",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Formatters",
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:markdown"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "markitdown.bold",
+        "title": "MarkItDown: Bold"
+      },
+      {
+        "command": "markitdown.italic",
+        "title": "MarkItDown: Italic"
+      },
+      {
+        "command": "markitdown.underline",
+        "title": "MarkItDown: Underline"
+      },
+      {
+        "command": "markitdown.strikethrough",
+        "title": "MarkItDown: Strikethrough"
+      },
+      {
+        "command": "markitdown.highlight",
+        "title": "MarkItDown: Highlight"
+      },
+      {
+        "command": "markitdown.quote",
+        "title": "MarkItDown: Quote"
+      },
+      {
+        "command": "markitdown.link",
+        "title": "MarkItDown: Insert Link"
+      },
+      {
+        "command": "markitdown.inlineCode",
+        "title": "MarkItDown: Inline Code"
+      },
+      {
+        "command": "markitdown.codeBlock",
+        "title": "MarkItDown: Code Block"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "markitdown.bold",
+          "group": "markdown"
+        },
+        {
+          "command": "markitdown.italic",
+          "group": "markdown"
+        },
+        {
+          "command": "markitdown.underline",
+          "group": "markdown"
+        },
+        {
+          "command": "markitdown.strikethrough",
+          "group": "markdown"
+        },
+        {
+          "command": "markitdown.highlight",
+          "group": "markdown"
+        },
+        {
+          "command": "markitdown.quote",
+          "group": "markdown"
+        },
+        {
+          "command": "markitdown.link",
+          "group": "markdown"
+        },
+        {
+          "command": "markitdown.codeBlock",
+          "group": "markdown"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.3.0"
+  }
+}

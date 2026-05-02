@@ -1,0 +1,29 @@
+# ── Dependencies ──
+node_modules/
+
+# ── Build outputs ──
+out/
+dist/
+
+# ── Logs & temporäre Dateien ──
+*.log
+*.tmp
+*.temp
+*.inactive
+
+# ── Environment ──
+.env
+.env.local
+*.env.*
+
+# ── Editor & IDE ──
+.vscode/
+.idea/
+
+# ── OS‑spezifische Dateien ──
+.DS_Store
+Thumbs.db
+
+# ── Weitere Build‑Artefakte ──
+build/
+target/

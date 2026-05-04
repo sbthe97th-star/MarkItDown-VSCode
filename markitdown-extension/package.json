@@ -2,7 +2,7 @@
   "name": "markitdown",
   "displayName": "MarkItDown Extension",
   "description": "Advanced Markdown formatting (bold, italic, underline, strikethrough, highlight, quote, link, inline code, code block) plus Admonition highlighting, folding, and IntelliSense snippets. Designed to complement Markdown All in One.",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "publisher": "dein-publisher",
   "engines": {
     "vscode": "^1.80.0"

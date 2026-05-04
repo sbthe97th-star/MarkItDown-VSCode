@@ -107,6 +107,34 @@ const highlightDeco = vscode.window.createTextEditorDecorationType({
   backgroundColor: "rgba(255, 255, 0, 0.4)",
 });
 
+// ── Workaround: Dekorationen für native Markdown‑Syntax (Tokenizer‑Bug) ──
+const boldWorkaroundDeco = vscode.window.createTextEditorDecorationType({
+  fontWeight: "bold",
+});
+
+const italicWorkaroundDeco = vscode.window.createTextEditorDecorationType({
+  fontStyle: "italic",
+});
+
+const underlineWorkaroundDeco = vscode.window.createTextEditorDecorationType({
+  textDecoration: "underline",
+});
+
+const strikethroughWorkaroundDeco = vscode.window.createTextEditorDecorationType({
+  textDecoration: "line-through",
+});
+
+const inlineCodeWorkaroundDeco = vscode.window.createTextEditorDecorationType({
+  backgroundColor: "rgba(128,128,128,0.15)",
+  borderRadius: "4px",
+  color: "#e83e8c",
+});
+
+const inlineMathWorkaroundDeco = vscode.window.createTextEditorDecorationType({
+  color: "#569cd6",
+  fontStyle: "italic",
+});
+
 // ── Hilfsfunktionen ──
 function getEditor(): vscode.TextEditor | undefined {
   return vscode.window.activeTextEditor;
@@ -201,6 +229,14 @@ function updateDecorations() {
   const tagRanges: vscode.Range[] = [];
   const highlightRanges: vscode.Range[] = [];
 
+  // Workaround‑Ranges
+  const boldRanges: vscode.Range[] = [];
+  const italicRanges: vscode.Range[] = [];
+  const underlineRanges: vscode.Range[] = [];
+  const strikethroughRanges: vscode.Range[] = [];
+  const inlineCodeRanges: vscode.Range[] = [];
+  const inlineMathRanges: vscode.Range[] = [];
+
   let inCodeBlock = false;
   const admonStack: { indent: number; type: AdmonitionType }[] = [];
 
@@ -249,7 +285,7 @@ function updateDecorations() {
         bodyRanges[currentType].push(new vscode.Range(i, 0, i, line.length));
       }
 
-      // Prioritäten numerisch
+      // ── Prioritäten numerisch ──
       const numPrioRegex = /@\s*P\s*([1-6])\b/gi;
       let m: RegExpExecArray | null;
       while ((m = numPrioRegex.exec(line)) !== null) {
@@ -359,6 +395,43 @@ function updateDecorations() {
         const end = start + m[1].length;
         highlightRanges.push(new vscode.Range(i, start, i, end));
       }
+
+      // ── Workaround für nativen Tokenizer‑Bug (alle 6 Elemente) ──
+      // Fett  **...**
+      const boldRegex = /\*\*(.+?)\*\*/g;
+      while ((m = boldRegex.exec(line)) !== null) {
+        boldRanges.push(new vscode.Range(i, m.index, i, m.index + m[0].length));
+      }
+
+      // Kursiv  *...*
+      const italicRegex = /\*([^*]+)\*/g;
+      while ((m = italicRegex.exec(line)) !== null) {
+        italicRanges.push(new vscode.Range(i, m.index, i, m.index + m[0].length));
+      }
+
+      // Unterstrichen  __...__
+      const underlineRegex = /__(.+?)__/g;
+      while ((m = underlineRegex.exec(line)) !== null) {
+        underlineRanges.push(new vscode.Range(i, m.index, i, m.index + m[0].length));
+      }
+
+      // Durchgestrichen  ~~...~~
+      const strikeRegex = /~~(.+?)~~/g;
+      while ((m = strikeRegex.exec(line)) !== null) {
+        strikethroughRanges.push(new vscode.Range(i, m.index, i, m.index + m[0].length));
+      }
+
+      // Inline‑Code  `...`
+      const inlineCodeRegex = /`([^`]+)`/g;
+      while ((m = inlineCodeRegex.exec(line)) !== null) {
+        inlineCodeRanges.push(new vscode.Range(i, m.index, i, m.index + m[0].length));
+      }
+
+      // Inline‑Mathe  $...$
+      const mathRegex = /\$(.+?)\$/g;
+      while ((m = mathRegex.exec(line)) !== null) {
+        inlineMathRanges.push(new vscode.Range(i, m.index, i, m.index + m[0].length));
+      }
     }
   }
 
@@ -382,6 +455,14 @@ function updateDecorations() {
   editor.setDecorations(holdDeco, holdRanges);
   editor.setDecorations(tagDeco, tagRanges);
   editor.setDecorations(highlightDeco, highlightRanges);
+
+  // Workaround‑Dekorationen setzen
+  editor.setDecorations(boldWorkaroundDeco, boldRanges);
+  editor.setDecorations(italicWorkaroundDeco, italicRanges);
+  editor.setDecorations(underlineWorkaroundDeco, underlineRanges);
+  editor.setDecorations(strikethroughWorkaroundDeco, strikethroughRanges);
+  editor.setDecorations(inlineCodeWorkaroundDeco, inlineCodeRanges);
+  editor.setDecorations(inlineMathWorkaroundDeco, inlineMathRanges);
 }
 
 // ── Aktivierung ──
